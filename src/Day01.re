@@ -39,8 +39,8 @@ let add_delta = (i: int, d: delta) =>
   };
 
 let answer1 =
-  loadTokens("res/01.1.txt")
-  |> Js.Array.map(parse_delta)
+  loadTokens("res/01.txt")
+  |> Array.map(parse_delta)
   |> Array.fold_left(add_delta, 0);
 
 Js.log("1.1 = " ++ string_of_int(answer1));
@@ -57,3 +57,26 @@ let testEqual = (actual, expected) =>
   };
 
 testEqual(answer1, 439);
+
+/* Part two */
+
+let deltas = loadTokens("res/01.txt") |> Array.map(parse_delta);
+let found = ref(false);
+let visited = ref([0]);
+let i = ref(0);
+
+while (! found^) {
+  let next = add_delta(List.nth(visited^, 0), deltas[i^]);
+  if (List.length(List.find_all(v => v == next, visited^)) > 0) {
+    found := true;
+  } else {
+    i := i^ + 1;
+    if (i^ == Array.length(deltas)) {
+      i := 0;
+    };
+  };
+  visited := [next, ...visited^];
+};
+
+let answer2: int = List.nth(visited^, 0);
+Js.log("1.2 = " ++ string_of_int(answer2));
