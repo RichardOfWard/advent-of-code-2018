@@ -92,14 +92,15 @@ let sleepiest_guard_log = StringMap.find(sleepiest_guard, guard_log);
 let sleepiest_minute_amount =
   Array.fold_left((a, b) => a > b ? a : b, 0, sleepiest_guard_log);
 
-let sleepiest_minute = Js.Array.indexOf(sleepiest_minute_amount, sleepiest_guard_log);
+let sleepiest_minute =
+  Js.Array.indexOf(sleepiest_minute_amount, sleepiest_guard_log);
 
 Js.log("answer 1");
 Js.log(sleepiest_guard);
 Js.log("*");
 Js.log(sleepiest_minute);
 Assert.assert_equal("Guard #2953 begins shift", sleepiest_guard);
-Assert.assert_equal(sleepiest_minute, 39)
+Assert.assert_equal(sleepiest_minute, 39);
 
 let sleepiest_guard = ref("nobody");
 let sleep_amount = ref(0);
@@ -107,7 +108,8 @@ let sleepiest_minute = ref(0);
 
 StringMap.iter(
   (guard, log) => {
-    let guard_sleepiest_minute_amount = Array.fold_left((a, b) => a > b ? a : b, 0, log);
+    let guard_sleepiest_minute_amount =
+      Array.fold_left((a, b) => a > b ? a : b, 0, log);
     if (guard_sleepiest_minute_amount > sleep_amount^) {
       sleepiest_guard := guard;
       sleep_amount := guard_sleepiest_minute_amount;
@@ -124,4 +126,4 @@ Js.log(sleepiest_guard);
 Js.log("*");
 Js.log(sleepiest_minute);
 Assert.assert_equal("Guard #1069 begins shift", sleepiest_guard);
-Assert.assert_equal(sleepiest_minute, 30)
+Assert.assert_equal(sleepiest_minute, 30);
