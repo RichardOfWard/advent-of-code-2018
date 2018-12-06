@@ -34,24 +34,24 @@ let answer1 = Array.length(react_many(tokens));
 Js.log(answer1);
 Assert.assert_equal(answer1, 9060);
 
-let tried_solution_lengths = Js.String.split("","abcdefghijklmnopqrstuvwxyz")
-    |> Array.map(
-        letter =>
-            Array.length(
+let tried_solution_lengths =
+  Js.String.split("", "abcdefghijklmnopqrstuvwxyz")
+  |> Array.map(letter =>
+       Array.length(
+         react_many(
+           Js.Array.filter(
+             e => Js.String.toLocaleLowerCase(e) != letter,
+             tokens,
+           ),
+         ),
+       )
+     );
 
-            react_many(
-            Js.Array.filter(
-                e => Js.String.toLocaleLowerCase(e) != letter,
-                tokens
-            )
-            )
-            )
-    );
-
-let answer2 = Array.fold_left(
-    best => current => current < best ? current: best,
+let answer2 =
+  Array.fold_left(
+    (best, current) => current < best ? current : best,
     Array.length(tokens),
-    tried_solution_lengths
-)
+    tried_solution_lengths,
+  );
 
 Js.log(answer2);
