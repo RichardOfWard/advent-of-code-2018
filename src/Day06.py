@@ -1,8 +1,6 @@
 from parse import parse
 
-GRID_WIDTH = 1000
-
-GRID_HEIGHT = 1000
+PART_2_DIST = 10000
 
 
 def parse_file():
@@ -37,12 +35,17 @@ def part1():
     nearest_loc_id_counts = {loc_id: 0 for loc_id in locations.keys()}
     loc_ids_on_edges = set()
 
-    for x in range(GRID_WIDTH):
-        for y in range(GRID_HEIGHT):
+    min_x = min(x for x, y in locations.values())
+    min_y = min(y for x, y in locations.values())
+    max_x = max(x for x, y in locations.values())
+    max_y = max(y for x, y in locations.values())
+
+    for x in range(min_x, max_x + 1):
+        for y in range(min_y, max_y + 1):
             nearest_loc_id = find_nearest_location(locations, x, y)
             if nearest_loc_id is not None:
                 nearest_loc_id_counts[nearest_loc_id] += 1
-                if x in [0, GRID_WIDTH - 1] or y in [0, GRID_HEIGHT - 1]:
+                if x in [min_x, max_x] or y in [min_y, max_y]:
                     loc_ids_on_edges.add(nearest_loc_id)
 
     for loc_id in locations.keys():
@@ -53,4 +56,25 @@ def part1():
     print(largest_area)
 
 
+def part2():
+    locations = parse_file()
+
+    min_x = min(x for x, y in locations.values())
+    min_y = min(y for x, y in locations.values())
+    max_x = max(x for x, y in locations.values())
+    max_y = max(y for x, y in locations.values())
+
+    area = 0
+    for x in range(min_x, max_x + 1):
+        for y in range(min_y, max_y + 1):
+            total_distance = sum(
+                manhattan_distance(x, y, lx, ly) for lx, ly in locations.values()
+            )
+            if total_distance < 10000:
+                area += 1
+
+    print(area)
+
+
 part1()
+part2()
