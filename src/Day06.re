@@ -9,14 +9,14 @@ let locations =
     {x: int_of_string(split[0]), y: int_of_string(split[1])};
   });
 
-let min = {x:-1000, y:-1000};
+let min = {x: (-1000), y: (-1000)};
 
-let max = {x:1000, y:1000};
+let max = {x: 1000, y: 1000};
 
 let nearest_locations_map =
   Array.make_matrix(
-    max.x - min.x+1,
-    max.y - min.y+1,
+    max.x - min.x + 1,
+    max.y - min.y + 1,
     None: option(point),
   );
 
