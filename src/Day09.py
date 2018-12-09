@@ -7,7 +7,10 @@ def get_game_parameters():
 
 
 class BoardMarble(object):
-    def __init__(self, value, prev_pos: 'BoardMarble' = None, next_pos: 'BoardMarble' = None):
+    next_pos = None  # type: BoardMarble
+    prev_pos = None  # type: BoardMarble
+
+    def __init__(self, value, prev_pos=None, next_pos=None):
         if prev_pos is None and next_pos is None:
             prev_pos = next_pos = self
 
@@ -43,6 +46,12 @@ def play_game(num_players, largest_marble):
     return scores
 
 
-answer1 = max(*(play_game(*get_game_parameters())))
+input_num_players, input_largest_marble = get_game_parameters()
+
+answer1 = max(*(play_game(input_num_players, input_largest_marble)))
 print(answer1)
 assert answer1 == 429287
+
+answer2 = max(*(play_game(input_num_players, input_largest_marble * 100)))
+print(answer2)
+assert answer2 == 3624387659
